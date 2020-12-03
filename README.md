@@ -1,6 +1,6 @@
 # advent-of-code-2020
 
-Answers for this year's [Advent of Code](https://adventofcode.com/)
+My answers for [Advent of Code](https://adventofcode.com/) 2020
 
 ```
 poetry run python -maoc.XXX
