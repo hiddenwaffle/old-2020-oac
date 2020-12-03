@@ -21,8 +21,7 @@ def main():
     _5_1 = slide(5, 1, lines)
     _7_1 = slide(7, 1, lines)
     _1_2 = slide(1, 2, lines)
-    print(_1_1, _3_1, _5_1, _7_1, _1_2)
-    print('result', _1_1 * _3_1 * _5_1 * _7_1 * _1_2)
+    print(_1_1 * _3_1 * _5_1 * _7_1 * _1_2)
 
 
 if __name__ == '__main__':
