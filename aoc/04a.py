@@ -2,7 +2,7 @@ import re
 
 REGEX = re.compile(r'([a-z]+):([a-zA-z0-9#]+)')  # https://pythex.org/
 
-# NOTE: Not requiring cid
+# NOTE: cid is optional (1/2)
 REQUIRED_FIELDS = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
 
 
@@ -13,18 +13,18 @@ class Passport:
     def line_into_fields(self, line):
         matches = REGEX.findall(line)
         for field, value in matches:
-            if field not in REQUIRED_FIELDS and field != 'cid':  # NOTE: cid is optional
+            if field not in REQUIRED_FIELDS and field != 'cid':  # NOTE: cid is optional (2/2)
                 raise Exception(field)
             self.fields[field] = value
 
-    def set(self, field, value):
-        self.fields[field] = value
-
     def valid(self):
-        for field in REQUIRED_FIELDS:
-            if field not in self.fields:
+        for required_field in REQUIRED_FIELDS:
+            if required_field not in self.fields:
                 return False
         return True
+
+    def __str__(self):
+        return str(self.fields)
 
 
 def main():
@@ -32,8 +32,8 @@ def main():
         lines = file.read().splitlines()
     valid = 0
     passport = Passport()
-    for i in range(len(lines)):
-        line = lines[i].strip()
+    for line in lines:
+        line = line.strip()
         if line:
             passport.line_into_fields(line)
         else:
