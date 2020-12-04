@@ -9,6 +9,7 @@ REQUIRED_FIELDS = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
 class Passport:
     def __init__(self):
         self.fields = {}
+        self.count = 0
 
     def line_into_fields(self, line):
         matches = REGEX.findall(line)
@@ -16,6 +17,7 @@ class Passport:
             if field not in REQUIRED_FIELDS and field != 'cid':  # NOTE: cid is optional (2/2)
                 raise Exception(field)
             self.fields[field] = value
+            self.count += 1
 
     def valid(self):
         for required_field in REQUIRED_FIELDS:
@@ -40,6 +42,9 @@ def main():
             if passport.valid():
                 valid += 1
             passport = Passport()
+    # Prevent off-by-one, took forever to figure out
+    if passport.valid():
+        valid += 1
     print(valid)
 
 
