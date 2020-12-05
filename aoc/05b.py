@@ -37,7 +37,6 @@ def bsp_to_seat(line):
 def main():
     with open('input/05.data') as file:
         lines = file.read().splitlines()
-    max_seat = -1
     seats = []
     for line in lines:
         seat = bsp_to_seat(line)
