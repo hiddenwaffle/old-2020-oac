@@ -1,6 +1,6 @@
 def main():
     with open('input/08_example.data') as file:
-        lines = file.read().replace('bags', 'bag').splitlines()
+        lines = file.read().splitlines()
     print(lines)
 
 
