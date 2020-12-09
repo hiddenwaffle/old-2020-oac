@@ -1,12 +1,3 @@
-from itertools import chain, combinations
-
-
-# https://stackoverflow.com/a/1482316
-def powerset(iterable):
-    s = list(iterable)
-    return chain.from_iterable(combinations(s, r) for r in range(len(s) + 1))
-
-
 def ensure_pair(candidates, target):
     candidate_pairs = [(a, b) for a in candidates for b in candidates if a != b]
     for a, b in candidate_pairs:
@@ -17,28 +8,19 @@ def ensure_pair(candidates, target):
         return False
 
 
-# https://stackoverflow.com/a/28885643
-def is_sequential(mylist):
-    for i in range(len(mylist)-1):
-        if mylist[i]+1 != mylist[i+1]:
-            return False
-    return True
-
-
 def find_contiguous(candidates, target):
-    summers = [x for x in list(powerset(candidates)) if sum(x) == target]
-    for summer in summers:
-        indices = list(map(lambda a: candidates.index(a), summer))
-        if is_sequential(indices):
-            print('summer:', summer)
-            return summer
+    bound_pairs = [(a, b) for a in range(1000) for b in range(1000) if a < b]
+    for a, b in bound_pairs:
+        values = candidates[a:b]
+        if sum(values) == target:
+            return values
     raise Exception(candidates, target)
 
 
 def main():
-    with open('input/09_example.data') as file:
+    with open('input/09.data') as file:
         numbers = list(map(int, file.read().splitlines()))
-    preamble = 5
+    preamble = 25
     for i in range(preamble, len(numbers)):
         candidates = numbers[i - preamble:i]
         target = numbers[i]
