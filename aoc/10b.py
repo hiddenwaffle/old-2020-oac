@@ -1,32 +1,34 @@
-def count_next(ratings):
-    print(ratings)
-    if not ratings:
-        return 1
-    current = ratings[0]
+def count_next(rating, ratings):
+    index = ratings.index(rating)
     candidates = []
-    for candidate_i in range(1, 4):
-        if candidate_i >= len(ratings):
-            break
-        candidate = ratings[candidate_i]
-        if candidate <= current+3:
-            candidates.append((candidate, candidate_i))
-    if not candidates:
-        return 1
-    else:
-        acc = len(candidates)
-        for candidate, candidate_i in candidates:
-            print('going from', current, 'to', candidate, 'out of', len(candidates))
-            acc *= count_next(ratings[candidate_i:])
-        return acc
+    for other in ratings[index + 1:index + 4]:
+        if other <= rating + 3:
+            candidates.append(other)
+    return candidates
+
+
+def do_it(register):
+    for key in register:
+        nexts = register[key]
+        if len(nexts) < 1:
+            register[key] = 1
+        else:
+            acc = 0
+            for next in nexts:
+                acc += register[next]
+            register[key] = acc
+    print(register[0])
 
 
 def main():
-    with open('input/10_example.data') as file:
+    with open('input/10.data') as file:
         ratings = sorted(list(map(int, file.read().splitlines())))
     ratings.insert(0, 0)  # outlet
-    ratings.append(ratings[-1]+3)  # device
-    result = count_next(ratings)
-    print('distinct ways to arrange the adapters:', result)
+    ratings.append(ratings[-1] + 3)  # device
+    register = {}
+    for rating in reversed(ratings):
+        register[rating] = count_next(rating, ratings)
+    do_it(register)
 
 
 if __name__ == '__main__':
