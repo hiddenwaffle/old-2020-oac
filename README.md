@@ -1,6 +1,4 @@
-# advent-of-code-2020
-
-My answers for [Advent of Code](https://adventofcode.com/) 2020
+# old-2020-aoc
 
 ## Prerequisites
 
